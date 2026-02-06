@@ -1,0 +1,11 @@
+@GridSign_HostAddress = http://localhost:5035
+
+GET {{GridSign_HostAddress}}/todos/
+Accept: application/json
+
+###
+
+GET {{GridSign_HostAddress}}/todos/1
+Accept: application/json
+
+###

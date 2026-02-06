@@ -64,3 +64,18 @@ frontend/.env.*
 *.log
 *.tmp
 *.swp
+
+# ignore all .Idea files
+.idea
+
+# ignore all .DotSettings settings files
+**/Folder.DotSettings.user
+
+#ignore bin directory
+bin/
+
+#ignore obj directory
+obj/
+
+#ignore logs directly
+logs/
