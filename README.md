@@ -4,14 +4,15 @@ A full-stack electronic document workflow and signing platform. GridSign enables
 
 ## Overview
 GridSign provides:
-- Template creation and workflow initiation
-- Recipient role assignment and field mapping
-- Secure, single-use signing tokens delivered via email (and reused for reminders until consumed/expired)
-- Email verification with pending email staging and resend capability
-- Profile management with avatar upload, company & title metadata, timezone awareness
-- Automated reminder jobs (Quartz) for outstanding signing tasks
-- Local UI preferences (theme, filters, view modes) persisted in browser storage
-- PDF manipulation on the client using `pdf-lib`
+- **Template & Workflow Management**: Create reusable templates and initiate workflows with multiple view modes (Grid, Kanban, Grouped, Table, Hybrid, Activity, Analytics)
+- **Recipient Management**: Role assignment, field mapping, and sequential/parallel signing modes
+- **Secure Token System**: Single-use signing tokens with email delivery and automatic expiration
+- **Email Verification**: Staged pending email system with resend capability
+- **Profile Management**: Avatar upload, company metadata, timezone awareness, theme preferences
+- **Advanced Reporting**: Interactive dashboards with charts, KPIs, and export functionality
+- **Automated Reminders**: Quartz-based background jobs for outstanding signing tasks
+- **Modern UI**: Clean, professional design with dark mode, multiple view modes, and responsive layouts
+- **PDF Manipulation**: Client-side PDF field stamping and document generation using pdf-lib
 
 ## Architecture
 ```
@@ -38,16 +39,51 @@ Root
 ```
 
 ## Key Features
-- One-time signing token generation & validation (invalidated on first successful signing)
-- Token reuse logic for reminders if still active
-- Email verification workflow (PendingEmail + IsMailVerified)
-- Avatar management with server-side persistence
-- Robust repository-service layering for maintainability
-- Automatic DB migration application at startup (with `Database.Migrate()`)
-- Background Quartz job scheduling (reminders)
-- Strongly typed front-end API layer + local preference storage
-- Unit tests (Vitest + Testing Library) for token extraction & profile logic
-- PDF field stamping via client-side libraries
+
+### Workflow Management
+- **7 View Modes**: Grid, Grouped, Kanban, DataTable, Hybrid, Activity, Analytics
+- **Advanced Filtering**: Multi-status filters, search, date range, creator filters
+- **Smart Sorting**: Sort by name, date, status, creator with ascending/descending
+- **Pagination**: Configurable page sizes (10, 25, 50, 100 items)
+- **Lifecycle Management**: Start, cancel, view, delete workflows with confirmation dialogs
+- **Status Tracking**: Completed, In-Progress, Draft, Expired, Cancelled, Failed
+- **Card-Based Grouped View**: Clean card layout matching template design
+- **Kanban Board**: Drag-and-drop status management with column organization
+
+### Template Management
+- **Multiple View Modes**: Grid, Grouped, Kanban, DataTable, Hybrid, Activity, Analytics
+- **Template Grid**: Clean card design with status badges and hover effects
+- **Usage Tracking**: Monitor template usage counts and analytics
+- **Draft Management**: Create, edit, and delete draft templates
+- **Template Details**: Comprehensive template configuration and field mapping
+- **Kanban View**: Workflow-style kanban board for template organization
+
+### Reports & Analytics
+- **Interactive Dashboard**: Real-time metrics and visualizations
+- **KPI Cards**: Total workflows, documents signed, completion time, active users
+- **Advanced Charts**: Area, Bar, Donut, Radial gauge, Stacked bar charts
+- **Data Export**: CSV export functionality with date range selection
+- **Status Distribution**: Visual breakdown of workflow statuses
+- **Recent Activity**: Timeline view of workflow events
+- **Top Users**: Leaderboard of most active users
+- **Chart Customization**: Labels hidden on bars, hover tooltips for full information
+- **Responsive Design**: Mobile-optimized chart layouts
+
+### Security & Authentication
+- **Single-Use Tokens**: Prevent replay attacks on signing requests
+- **JWT Authentication**: Secure bearer token system
+- **Role-Based Access**: Admin, User, Signer roles with policy enforcement
+- **Email Verification**: Staged pending email system before activation
+- **Token Expiration**: Automatic cleanup of expired/used tokens
+- **CORS Protection**: Restricted to known origins
+
+### User Experience
+- **Dark Mode Support**: Automatic theme detection and manual toggle
+- **Responsive Design**: Mobile-first approach with breakpoint optimization
+- **Local Preferences**: Persisted filters, view modes, and UI state
+- **Smooth Animations**: Micro-interactions and transitions throughout
+- **Accessible UI**: ARIA labels, keyboard navigation, screen reader support
+- **Professional Design**: Clean, minimal color palette with strategic accents
 
 ## Backend Stack
 - .NET 8 / ASP.NET Core Web API
@@ -68,13 +104,26 @@ Root
 | Quartz Jobs | Reminder job triggers token reuse/invite logic |
 
 ## Frontend Stack
-- Next.js 15 (Turbopack dev/build)
-- React 19 + TypeScript 5
-- TanStack Query 5 for data caching & re-fetching
-- Tailwind CSS 4 (utility styling) + Radix UI primitives
-- Vitest + Testing Library (React + jsdom) for fast test runs
-- Lucide icons, pdf-lib for PDF manipulation
-- Local preference persistence (theme, filters, view modes)
+- **Next.js 15** (Turbopack dev/build, App Router)
+- **React 19** + TypeScript 5
+- **TanStack Query 5** for data caching, mutations & optimistic updates
+- **Tailwind CSS 4** (utility styling) + Radix UI primitives
+- **Recharts** for advanced data visualizations
+- **Vitest + Testing Library** (React + jsdom) for fast test runs
+- **Lucide Icons** for comprehensive icon set
+- **pdf-lib** for client-side PDF manipulation
+- **Sonner** for toast notifications
+- **Local Storage** for preference persistence (theme, filters, view modes)
+
+### Frontend Features
+- **Component Architecture**: Modular, reusable components with TypeScript
+- **State Management**: Local state + TanStack Query for server state
+- **Form Handling**: Controlled components with validation
+- **Error Boundaries**: Graceful error handling and recovery
+- **Loading States**: Skeleton screens and loading indicators
+- **Optimistic Updates**: Instant UI feedback before server confirmation
+- **Responsive Tables**: Adaptive layouts for mobile and desktop
+- **Chart Library**: Custom SVG charts + Recharts for advanced visualizations
 
 ## Running Locally
 ### Prerequisites
@@ -167,11 +216,21 @@ Vitest covers token utilities (`lib/signingToken.ts`) and profile email verifica
 - Warnings & EF diagnostics surfaced during build/migration.
 
 ## Roadmap / Next Steps
-- [ ] Implement token cleanup background job (purge expired/used SigningTokens).
-- [ ] Harden email templates (responsive + dark mode).
-- [ ] Add integration/API tests for signing completion & token invalidation.
-- [ ] Introduce rate limiting on verification email resends.
-- [ ] Add license file (currently unspecified).
+- [x] Multiple view modes for workflows and templates (Grid, Kanban, Grouped, etc.)
+- [x] Advanced filtering and sorting capabilities
+- [x] Card-based grouped view matching template design
+- [x] Kanban board with workflow-style design for templates
+- [x] Enhanced reports dashboard with interactive charts
+- [x] Chart optimizations (hidden labels, hover tooltips)
+- [ ] Implement token cleanup background job (purge expired/used SigningTokens)
+- [ ] Harden email templates (responsive + dark mode)
+- [ ] Add integration/API tests for signing completion & token invalidation
+- [ ] Introduce rate limiting on verification email resends
+- [ ] Real-time notifications for workflow updates
+- [ ] Bulk workflow operations (start, cancel, delete multiple)
+- [ ] Advanced analytics with custom date ranges and filters
+- [ ] Template versioning and history tracking
+- [ ] Add license file (currently unspecified)
 
 ## Troubleshooting
 | Issue | Possible Cause | Fix |
