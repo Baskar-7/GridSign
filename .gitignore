@@ -1,0 +1,66 @@
+##################################
+# OS
+##################################
+.DS_Store
+Thumbs.db
+
+##################################
+# IDEs
+##################################
+
+# Rider / IntelliJ
+.idea/
+*.sln.iml
+
+# Visual Studio / VS Code
+.vs/
+.vscode/
+*.user
+*.userosscache
+*.suo
+
+##################################
+# Backend (.NET / Rider)
+##################################
+
+# Build outputs
+backend/bin/
+backend/obj/
+
+# Test results
+backend/TestResults/
+
+# Logs
+backend/**/*.log
+
+# User secrets
+backend/**/secrets.json
+backend/**/appsettings.Development.json
+
+##################################
+# Frontend (VS Code / Node)
+##################################
+
+# Dependencies
+frontend/node_modules/
+
+# Build outputs
+frontend/dist/
+frontend/build/
+frontend/.angular/
+
+# Cache
+frontend/.cache/
+frontend/.npm/
+frontend/.pnpm-store/
+
+# Env files
+frontend/.env
+frontend/.env.*
+
+##################################
+# General
+##################################
+*.log
+*.tmp
+*.swp
